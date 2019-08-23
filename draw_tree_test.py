@@ -135,26 +135,6 @@ class MultiTree(object):
                           new_parent.name)
                     print('*' * 30)
 
-    def show_tree(self):
-        """
-        利用networkx转换成图结构，方便结合matplotlib将树画出来
-        """
-        G = nx.Graph()
-        self.to_graph_recursion(self.tree, G)
-        nx.draw(G, with_labels=True)
-        plt.savefig('fig.png', bbox_inches='tight')
-        # plt.show()
-
-    def to_graph_recursion(self, tree, G):
-        """
-        将节点加入到图中
-        """
-        G.add_node(tree.name)
-        for child in tree.children:
-            G.add_nodes_from([tree.name, child.name])
-            G.add_edge(tree.name, child.name)
-            self.to_graph_recursion(child, G)
-
     def if_node_exist_recursion(self, tree, node, search, if_del):
         """
         tree:需要判断是否存在node节点的树
@@ -196,21 +176,44 @@ class MultiTree(object):
             else:
                 self.add_recursion(parent, node, child)
 
+    def show_tree(self):
+        """
+        利用networkx转换成图结构，方便结合matplotlib将树画出来
+        """
+        G = nx.Graph()
+        self.to_graph_recursion(self.tree, G)
+        nx.draw(G, with_labels=True)
+        plt.savefig('fig.png', bbox_inches='tight')
+        # plt.show()
+
+    def to_graph_recursion(self, tree, G):
+        """
+        将节点加入到图中
+        """
+        G.add_node(tree.name)
+        for child in tree.children:
+            G.add_nodes_from([tree.name, child.name])
+            G.add_edge(tree.name, child.name, edge_color='b')
+            self.to_graph_recursion(child, G)
+
 
 def main():
-    T = MultiTree('tree')
+    T = MultiTree('root')
     A = TreeNode('A')
     B = TreeNode('B')
     C = TreeNode('C')
     D = TreeNode('D')
     E = TreeNode('E')
     N = TreeNode('N')
-    G = TreeNode('G')
+    F = TreeNode('F')
     T.add(A)
-    T.add(D)
-    T.add(B, A)
-    # T.add(C, A)
-    # T.add(E, C)
+    T.add(B)
+    T.add(C)
+    T.add(F)
+    T.add(E, C)
+    T.add(N, B)
+    T.add(B, F)
+    T.search(A)
     T.show_tree()
 
 

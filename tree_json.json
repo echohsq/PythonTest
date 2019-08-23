@@ -1,0 +1,24 @@
+{
+  "children": [
+    {
+      "name": "B"
+    },
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "name": "I"
+            }
+          ],
+          "name": "E"
+        },
+        {
+          "name": "F"
+        }
+      ],
+      "name": "C"
+    }
+  ],
+  "name": "根节点"
+}
